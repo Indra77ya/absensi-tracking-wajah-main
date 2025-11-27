@@ -22,7 +22,7 @@ A Laravel-based employee attendance system using face recognition technology. Th
 
 1. Clone the repository
 ```bash
-git clone https://github.com/pratomobowo/absensi-tracking-wajah.git
+https://github.com/Indra77ya/absensi-tracking-wajah-main.git
 ```
 
 2. Navigate to the project directory
