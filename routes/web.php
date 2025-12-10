@@ -8,7 +8,6 @@ use App\Http\Controllers\Admin\EmployeeGradeController;
 use App\Http\Controllers\Admin\AttendanceReportController;
 use App\Http\Controllers\Admin\AttendanceDashboardController;
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\Api\EmployeeDataController;
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Middleware\AdminAuthenticate;
 use Illuminate\Support\Facades\Route;
@@ -26,33 +25,6 @@ Route::prefix('attendance')->name('attendance.')->group(function () {
     Route::post('/clock-in', [AttendanceController::class, 'clockIn'])->name('clock-in');
     Route::post('/clock-out', [AttendanceController::class, 'clockOut'])->name('clock-out');
     Route::get('/success/{type}/{employee}', [AttendanceController::class, 'success'])->name('success');
-});
-
-Route::get('/api/employees-face-data', function() {
-    try {
-        // Ambil semua karyawan aktif dengan data wajah
-        $employees = Employee::where('is_active', true)
-            ->whereNotNull('face_data')
-            ->get(['id', 'employee_id', 'name', 'face_data', 'photo']);
-
-        // Jika tidak ada karyawan di database, berikan data dummy agar tidak error
-        if ($employees->isEmpty()) {
-            return [
-                [
-                    'id' => 1,
-                    'employee_id' => 'EMP001',
-                    'name' => 'John Doe',
-                    'face_data' => '', // Data wajah kosong
-                    'photo' => null
-                ]
-            ];
-        }
-
-        return $employees;
-    } catch (\Exception $e) {
-        \Log::error('Error fetching employee face data: ' . $e->getMessage());
-        return response()->json(['error' => 'Failed to fetch employee data'], 500);
-    }
 });
 
 // Admin auth routes
