@@ -12,7 +12,7 @@ A Laravel-based employee attendance system using face recognition technology. Th
 
 ## Requirements
 
-- PHP 8.1 or higher
+- PHP 8.2 or higher
 - Composer
 - Node.js and NPM
 - MySQL
@@ -65,9 +65,38 @@ php artisan serve
 
 ## Usage
 
-1. Access the admin panel to add employees and their face data
-2. Employees can use the attendance page to check in/out using face recognition
-3. Admin can generate reports and monitor attendance
+### 1. Accessing the Admin Dashboard
+
+To use the system, you must first log in to the admin dashboard. The project uses a separate authentication system for administrators and does not come with a default admin account.
+
+#### Create an Admin Account
+
+You need to create an admin account manually using Laravel Tinker.
+
+1.  Open your terminal in the project root and run the following command:
+    ```bash
+    php artisan tinker
+    ```
+
+2.  Inside the Tinker shell, execute the following PHP code. This will create a new entry in the `admins` table.
+    ```php
+    // You can customize the name, email, and password.
+    use App\Models\Admin;
+    use Illuminate\Support\Facades\Hash;
+
+    Admin::create([
+        'name' => 'Super Admin',
+        'email' => 'admin@example.com',
+        'password' => Hash::make('password'),
+    ]);
+    ```
+
+3.  Once the user is created, you can log in at **`/admin/login`**. Use the credentials you just created (e.g., email: `admin@example.com`, password: `password`).
+
+### 2. System Workflow
+
+*   **Admin Panel**: After logging in, you can manage employees, departments, and view attendance reports. The most important first step is to add employees and capture their face data.
+*   **Attendance Page**: Employees can visit the main page (`/attendance`) to clock in or clock out using the web camera for face recognition.
 
 ## Contributing
 
